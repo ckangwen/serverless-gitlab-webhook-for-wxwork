@@ -1,0 +1,16 @@
+component: http
+name: gitlab-webhook-for-wxwork
+inputs:
+  src:
+    src: ./
+    exclude:
+      - .env
+  faas:
+    runtime: Nodejs12.16
+    framework: express
+    name: '${name}'
+  apigw:
+    protocols:
+      - http
+      - https
+app: gitlab-webhook-for-wxwork
