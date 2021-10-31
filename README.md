@@ -1,30 +1,65 @@
-# 快速构建 express-starter
-
-**中文** | [English](./README_EN.md)
+# serverless-gitlab-webhook-for-wxwork
 
 ## 简介
 
-express-starter 模板使用 Tencent SCF 组件及其触发器能力，方便的在腾讯云创建，配置和管理一个 express-starter 应用。
+本项目是基于腾讯云的serverless实现gitlab的webhook集成企业微信机器人消息通知
+
+**提示**：考虑到安全性，本项目把云函数配置、群机器人的配置隐藏起来，所有本项目不能直接运行。
+
+
+
+隐藏的配置如下
+
+```javascript
+// config.js
+
+const wxWorkKey = 'xxx'
+const GITLAB_EVENT_TOKEN = 'xxx'
+
+exports.wxWorkKey = wxWorkKey
+exports.GITLAB_EVENT_TOKEN = GITLAB_EVENT_TOKEN
+```
+
+
+
+```
+# .env
+TENCENT_APP_ID=xxx
+TENCENT_SECRET_ID=xxx
+TENCENT_SECRET_KEY=xxx
+TENCENT_TOKEN=xxx
+```
+
+
+
+
+
+
+
+## 前置知识
+1. serverless(本项目使用的是腾讯云)
+2. gitlab的[webhook配置](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html)
+3. [企业微信群机器人配置](https://work.weixin.qq.com/api/doc/90000/90136/91770)
+
 
 ## 快速开始
 
-### 1. 安装
-
-```bash
-# 安装 Serverless Framework
-npm install -g serverless
+### 运行
+``` bash
+npm run dev
 ```
 
-### 2. 创建
 
-通过如下命令直接下载该例子：
 
-```bash
-serverless init express-starter --name example
-cd example
-```
+### 测试
 
-### 3. 部署
+为了验证代码是否正确，需要在`postman`上调用`http://localhost:9000/gitlab-webhook`，并填上mock参数，模拟gitlab的webhook的调用
+
+gitlab触发webhook时会返回固定格式的数据，可以参考[Webhook events | GitLab](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html)
+
+
+
+### 部署
 
 在 `serverless.yml` 文件所在的项目根目录，运行以下指令，将会弹出二维码，直接扫码授权进行部署：
 
@@ -34,7 +69,9 @@ serverless deploy
 
 > **说明**：如果鉴权失败，请参考 [权限配置](https://cloud.tencent.com/document/product/1154/43006) 进行授权。
 
-### 4. 查看状态
+
+
+### 查看状态
 
 执行以下命令，查看您部署的项目信息：
 
@@ -42,29 +79,14 @@ serverless deploy
 serverless info
 ```
 
-### 5. 移除
+或者前往腾讯云serverless的控制卡查看
+
+
+
+### 移除
 
 可以通过以下命令移除 express-starter 应用
 
 ```bash
 serverless remove
-```
-
-### 账号配置（可选）
-
-serverless 默认支持扫描二维码登录，用户扫描二维码后会自动生成一个 `.env` 文件并将密钥存入其中.
-如您希望配置持久的环境变量/秘钥信息，也可以本地创建 `.env` 文件, 
-把从[API 密钥管理](https://console.cloud.tencent.com/cam/capi)中获取的 `SecretId` 和`SecretKey` 填入其中.
-
-> 如果没有腾讯云账号，可以在此[注册新账号](https://cloud.tencent.com/register)。
-
-```bash
-# 腾讯云的配置信息
-touch .env
-```
-
-```
-# .env file
-TENCENT_SECRET_ID=123
-TENCENT_SECRET_KEY=123
 ```

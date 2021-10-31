@@ -1,5 +1,5 @@
 {
-  "name": "gitlab-webhook-for-wxwork",
+  "name": "serverless-gitlab-webhook-for-wxwork",
   "version": "1.0.0",
   "description": "基于腾讯云的serverless实现gitlab的webhook集成企业微信机器人消息通知",
   "main": "app.js",
